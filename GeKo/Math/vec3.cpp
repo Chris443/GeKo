@@ -138,4 +138,16 @@ namespace gkm {
 			v1.x*v2.y - v1.y*v2.x);
 	}
 
+	vec3 operator+(const float& scalar,const vec3& v) {
+		return vec3(v.x + scalar, v.y + scalar, v.z + scalar);
+	}
+	vec3 operator-(const float& scalar, const vec3& v) {
+		return vec3(v.x - scalar, v.y - scalar, v.z - scalar);
+	}
+	vec3 operator*(const float& scalar, const vec3& v) {
+		return vec3(v.x * scalar, v.y * scalar, v.z * scalar);
+	}
+	vec3 operator/(const float& scalar, const vec3& v) {
+		return vec3(v.x / scalar, v.y / scalar, v.z / scalar);
+	}
 }

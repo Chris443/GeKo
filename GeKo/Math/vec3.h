@@ -9,6 +9,7 @@
 *	-reworking lhs and rhs operators
 *	-templating -> using no .cpp
 */
+#pragma once
 
 #include <algorithm>
 #include <math.h>
@@ -60,6 +61,11 @@ namespace gkm {
 		float x, y, z;
 	private:
 	};
+	
+	vec3 operator+(const float& scalar, const vec3& v);
+	vec3 operator-(const float& scalar, const vec3& v);
+	vec3 operator*(const float& scalar, const vec3& v);
+	vec3 operator/(const float& scalar, const vec3& v);
 
 	float dot(const vec3& v1, const vec3& v2);
 	vec3 cross(const vec3& v1, const vec3& v2);

@@ -76,7 +76,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\chris\source\repos\GeKo\vendor\GLAD\include;C:\Users\chris\source\repos\GeKo\vendor\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Users\chris\source\repos\GeKo\vendor\GLFW\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -115,7 +120,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\vendor\GLAD\src\glad.c" />
+    <ClCompile Include="Applications\GebertApplication\G_App.cpp" />
+    <ClCompile Include="Applications\KatiApplication\K_App.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math\mat4x4.cpp" />
+    <ClCompile Include="Math\vec3.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Applications\GebertApplication\G_App.h" />
+    <ClInclude Include="Applications\KatiApplication\K_App.h" />
+    <ClInclude Include="Math\mat4x4.h" />
+    <ClInclude Include="Math\vec3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

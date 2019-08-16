@@ -36,7 +36,13 @@
     <ClCompile Include="Math\vec4.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Core\window.cpp">
+    <ClCompile Include="GeKo\window.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="GeKo\Renderer\Shader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="GeKo\Renderer\Buffer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,8 +62,17 @@
     <ClInclude Include="Math\vec4.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Core\window.h">
+    <ClInclude Include="GeKo\window.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="GeKo\Renderer\Shader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="GeKo\Renderer\Buffer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Applications\KatiApplication\Shader\basic.shader" />
   </ItemGroup>
 </Project>

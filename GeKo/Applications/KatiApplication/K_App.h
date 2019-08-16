@@ -1,7 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "../../Core/window.h"
+#include "../../GeKo/window.h"
+#include "../../Math/mat4x4.h"
 
 class K_App {
 public:
@@ -9,6 +10,7 @@ public:
 	void run();
 private:
 	void init();
+	void step();
 
 	gke::window w;
 };

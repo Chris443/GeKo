@@ -5,7 +5,7 @@
 * @author Christian Kati
 *
 * @brief window wrapper for GLFW Windows
-* @TODO Write Input_Handler class to control input in a better way
+* @TODO move window & rework for system based (windows,linux,apple) use
 *
 */
 

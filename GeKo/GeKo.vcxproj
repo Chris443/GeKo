@@ -123,19 +123,26 @@
     <ClCompile Include="..\vendor\GLAD\src\glad.c" />
     <ClCompile Include="Applications\GebertApplication\G_App.cpp" />
     <ClCompile Include="Applications\KatiApplication\K_App.cpp" />
+    <ClCompile Include="GeKo\Renderer\Buffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\mat4x4.cpp" />
     <ClCompile Include="Math\vec3.cpp" />
     <ClCompile Include="Math\vec4.cpp" />
-    <ClCompile Include="Core\window.cpp" />
+    <ClCompile Include="GeKo\window.cpp" />
+    <ClCompile Include="GeKo\Renderer\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
     <ClInclude Include="Applications\KatiApplication\K_App.h" />
+    <ClInclude Include="GeKo\Renderer\Buffer.h" />
     <ClInclude Include="Math\mat4x4.h" />
     <ClInclude Include="Math\vec3.h" />
     <ClInclude Include="Math\vec4.h" />
-    <ClInclude Include="Core\window.h" />
+    <ClInclude Include="GeKo\window.h" />
+    <ClInclude Include="GeKo\Renderer\Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Applications\KatiApplication\Shader\basic.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

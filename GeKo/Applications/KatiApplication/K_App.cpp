@@ -12,12 +12,14 @@ void K_App::run() {
 	//TODO: use appropriate timestep
 	while (w.isOpen()) {
 
-		gke::processInput(w.get_Handle());
-
 		//process input (TODO: via input handler)
+		gke::processInput(w.get_Handle());
 		glfwPollEvents();
 
+
 		//update logic
+		step();
+
 
 		//render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -28,5 +30,20 @@ void K_App::run() {
 }
 
 void K_App::init() {
+
+}
+
+void K_App::step() {
+	float vertices[] = {
+	-0.5f, -0.5f, 0.0f,
+	 0.5f, -0.5f, 0.0f,
+	 0.0f,  0.5f, 0.0f
+	};
 	
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+ 
 }

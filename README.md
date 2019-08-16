@@ -1,4 +1,4 @@
-# GeKo - A Eenderer Project #
+# GeKo - A Renderer Project #
 
 Current TODOs:
 

@@ -1,6 +1,4 @@
-# GeKo
-
-# A renderer Project #
+# GeKo - A Eenderer Project #
 
 Current TODOs:
 
@@ -11,8 +9,11 @@ Current TODOs:
   
 * Input - Handler
 * timebased window updating
+* Texture Loader
+* Camera 
+* .obj Loader
 
-# Projects to Implement # 
+# Projects # 
 
 * Blinn-Phong
 * Minecraft Renderer

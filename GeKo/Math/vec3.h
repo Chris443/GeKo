@@ -14,18 +14,20 @@
 #include <algorithm>
 #include <math.h>
 
+#include "vec4.h"
+
 namespace gkm {
 	class vec3 {
 	public:
-		//initializes vector with (0,0,0)
-		vec3();
-		vec3(float x, float y, float z);
+		vec3(float x = 0, float y = 0, float z = 0);
 
 		vec3(const vec3& other);
 		//Move Constructor, evtl. overkill für vector but w/e
 		vec3(vec3&& other);
 
 		/*overloaded operators*/
+		vec3& operator=(const vec4& other);
+
 		vec3 operator-() { return vec3(-x, -y, -z); }
 		vec3& operator=(const vec3& other);
 

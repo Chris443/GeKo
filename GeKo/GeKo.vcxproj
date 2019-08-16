@@ -126,12 +126,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\mat4x4.cpp" />
     <ClCompile Include="Math\vec3.cpp" />
+    <ClCompile Include="Math\vec4.cpp" />
+    <ClCompile Include="Core\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
     <ClInclude Include="Applications\KatiApplication\K_App.h" />
     <ClInclude Include="Math\mat4x4.h" />
     <ClInclude Include="Math\vec3.h" />
+    <ClInclude Include="Math\vec4.h" />
+    <ClInclude Include="Core\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

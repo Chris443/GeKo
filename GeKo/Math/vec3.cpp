@@ -2,8 +2,6 @@
 
 namespace gkm {
 
-	vec3::vec3() :x(0), y(0), z(0) {}
-
 	vec3::vec3(float x, float y, float z)
 		: x(x), y(y), z(z) {}
 
@@ -14,6 +12,13 @@ namespace gkm {
 		std::swap(x, other.x);
 		std::swap(y, other.y);
 		std::swap(z, other.z);
+	}
+
+	vec3& vec3::operator=(const vec4& other) {
+		x = other.e[0] / other.e[3];
+		y = other.e[1] / other.e[3];
+		z = other.e[2] / other.e[3];
+		return *this;
 	}
 
 	vec3& vec3::operator=(const vec3& other) {

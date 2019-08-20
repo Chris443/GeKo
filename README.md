@@ -4,11 +4,11 @@ Current TODOs:
 
 * Several Math Operations
     * Gram-Schmidt(Orthonormal Basis)
-    * Completing Transformation Matrices (Column Major!)
+    * Completing Transformation Matrices (Column Major) - **Done** -> Expand (Quaternions)
     * Intersection Calculations e.g. Ray-Sphere
   
 * Input - Handler
-* timebased window updating
+* timebased window updating **Partially Done**
 * Texture Loader
 * Camera 
 * .obj Loader

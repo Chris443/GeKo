@@ -116,7 +116,7 @@ namespace gkm {
 		m[3][1] = v.y;
 		m[3][2] = v.z;
 	}
-
+	// vector values correspond to rotation around given axis
 	void mat4::euler_rotate(gkm::vec3 euler_angles) {
 		mat4 x_mat;
 		mat4 y_mat;
@@ -135,7 +135,7 @@ namespace gkm {
 		z_mat.m[0][1] = gkm::d_sin(euler_angles.z);
 		z_mat.m[1][0] = -gkm::d_sin(euler_angles.z);
 		z_mat.m[1][1] = gkm::d_cos(euler_angles.z);
-		//picked this order for no particular reason, rotating with 3 matrices sucks an
+		//picked this order for no particular reason, rotating with 3 matrices sucks anyways
 		*this = x_mat * y_mat * z_mat * (*this) ;
 	}
 

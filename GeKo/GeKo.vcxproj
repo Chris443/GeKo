@@ -131,11 +131,13 @@
     <ClCompile Include="GeKo\window.cpp" />
     <ClCompile Include="GeKo\Renderer\Shader.cpp" />
     <ClCompile Include="GeKo\Renderer\VertexArray.cpp" />
+    <ClCompile Include="GeKo\Renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
     <ClInclude Include="Applications\KatiApplication\K_App.h" />
     <ClInclude Include="GeKo\Renderer\Buffer.h" />
+    <ClInclude Include="GeKo\Renderer\stb_image.h" />
     <ClInclude Include="Math\const.h" />
     <ClInclude Include="Math\fwd.h" />
     <ClInclude Include="Math\mat4x4.h" />
@@ -144,6 +146,7 @@
     <ClInclude Include="GeKo\window.h" />
     <ClInclude Include="GeKo\Renderer\Shader.h" />
     <ClInclude Include="GeKo\Renderer\VertexArray.h" />
+    <ClInclude Include="GeKo\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Applications\KatiApplication\Shader\basic.frag" />

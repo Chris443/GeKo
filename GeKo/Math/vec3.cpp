@@ -8,6 +8,7 @@ namespace gkm {
 	vec3::vec3(const vec3& other)
 		: x(other.x), y(other.y), z(other.z) {}
 
+
 	vec3::vec3(vec3&& other) {
 		std::swap(x, other.x);
 		std::swap(y, other.y);

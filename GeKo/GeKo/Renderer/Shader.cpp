@@ -67,8 +67,14 @@ int Shader::create_shader(GLenum shaderType,const GLchar* source) {
 	return shader;
 }
 
-void Shader::setUniform3f(const std::string& name, gkm::vec3 v) {
+void Shader::setVec3(const std::string& name, gkm::vec3 v) {
 	glUniform3f(glGetUniformLocation(m_id,name.c_str()), v.x, v.y, v.z);
 }
+
+
+void Shader::setMat4(const std::string& name, gkm::mat4 m) {
+	glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()),1 , GL_FALSE, &m.m[0][0]);
+}
+
 
 

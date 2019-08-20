@@ -136,6 +136,8 @@
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
     <ClInclude Include="Applications\KatiApplication\K_App.h" />
     <ClInclude Include="GeKo\Renderer\Buffer.h" />
+    <ClInclude Include="Math\const.h" />
+    <ClInclude Include="Math\fwd.h" />
     <ClInclude Include="Math\mat4x4.h" />
     <ClInclude Include="Math\vec3.h" />
     <ClInclude Include="Math\vec4.h" />

@@ -4,15 +4,18 @@
 *
 * @brief Basic matrix class for mathematical operations
 		 uses COLUMN_MAJOR by default
-*		  feel free to extend the current version
+*
 *	- optimizations like SSE intrinsics, loop blocking/tiling, cache optimization, whatever are neglected
-*	-templating
+* @TODO:
+*   -templating
+*	-combining rotation matrices/using one + arbitrary axis
+*	-implement quaternions
 */
 
 #pragma once
 #include <cstring>
 
-#include "vec3.h"
+#include "fwd.h"
 
 namespace gkm {
 
@@ -28,10 +31,14 @@ namespace gkm {
 
 
 		void transpose();
-		
+		void translate(const vec3& v);
+		void euler_rotate(gkm::vec3 euler_angles);
+		void scale(const vec3& v);
+
 		mat4 operator+(const float& scalar);
 		mat4 operator-(const float& scalar);
 		mat4 operator*(const float& scalar);
+ 
 		mat4 operator+(const mat4& other);
 		mat4 operator-(const mat4& other);
 		mat4 operator*(const mat4& other);
@@ -42,8 +49,4 @@ namespace gkm {
 	private:
 
 	};
-
-
-	mat4 translate(mat4 m, vec3 v);
-
 }

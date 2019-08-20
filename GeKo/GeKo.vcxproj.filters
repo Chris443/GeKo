@@ -77,6 +77,12 @@
     <ClInclude Include="GeKo\Renderer\VertexArray.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Math\const.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\fwd.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Applications\KatiApplication\Shader\basic.frag" />

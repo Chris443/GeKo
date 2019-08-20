@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "../../GeKo/window.h"
-#include "../../Math/mat4x4.h"
+#include "../../Math/fwd.h"
 #include "../../GeKo/Renderer/Buffer.h"
 #include "../../GeKo/Renderer/Shader.h"
 

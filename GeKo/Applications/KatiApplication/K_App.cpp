@@ -3,14 +3,12 @@
 K_App::K_App()
 	:w(1200, 800, "Example")
 {
-
-
 	init();
 }
 
 void K_App::run() {
 
-	float oldTime = glfwGetTime();
+	float oldTime = static_cast<float>(glfwGetTime());
 	float deltaTime = 0;
 
 	//game loop 
@@ -20,8 +18,8 @@ void K_App::run() {
 		gke::processInput(w.get_Handle());
 		glfwPollEvents();
 
-		deltaTime = glfwGetTime() - oldTime;
-		oldTime = glfwGetTime();
+		deltaTime = static_cast<float>(glfwGetTime()) - oldTime;
+		oldTime = static_cast<float>(glfwGetTime());
 		//update logic()
 		update(deltaTime);
 
@@ -47,7 +45,7 @@ void K_App::init() {
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	vbo.create(vertices,sizeof(vertices)); 
+	vbo.create(vertices, sizeof(vertices));
 	ebo.create(indices, sizeof(indices));
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -60,12 +58,7 @@ void K_App::render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader.bind();
-	gkm::vec3 t(0.0, 0.0, 1.0);
-	gkm::mat4 m;
-	
-	t.x += cos(glfwGetTime());
 
-	shader.setUniform3f("pos", t);
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -73,5 +66,19 @@ void K_App::render() {
 }
 
 void K_App::update(float deltaTime) {
+	gkm::vec3 t(0.0, 0.0, 1.0);
+	gkm::mat4 m;
+	float v = static_cast<float>(glfwGetTime() * 30);
 
+	t.x = gkm::d_cos(v);
+
+	gkm::mat4 transformMat;
+
+	transformMat.translate(gkm::vec3(gkm::d_cos(v),0,0));	
+	transformMat.euler_rotate( gkm::vec3(0,v,v) );
+	//transformMat.euler_rotate(gkm::vec3(0, v, 0));
+	
+
+
+	shader.setMat4("mat", transformMat);
 }

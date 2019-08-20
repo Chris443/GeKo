@@ -9,6 +9,7 @@
 #include "glad/glad.h"
 
 #include "../../Math/vec3.h"
+#include "../../Math/mat4x4.h"
 
 class Shader
 {
@@ -21,7 +22,8 @@ public:
 	void bind();
 	void unbind();
 
-	void setUniform3f(const std::string& name, gkm::vec3 v);
+	void setVec3(const std::string& name, gkm::vec3 v);
+	void setMat4(const std::string& name, gkm::mat4 m);
 private:
 	int create_shader(GLenum shaderType, const GLchar* source);
 	void checkErrors(int shader,const std::string& shaderType);

@@ -130,6 +130,7 @@
     <ClCompile Include="Math\vec4.cpp" />
     <ClCompile Include="GeKo\window.cpp" />
     <ClCompile Include="GeKo\Renderer\Shader.cpp" />
+    <ClCompile Include="GeKo\Renderer\VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
@@ -140,9 +141,11 @@
     <ClInclude Include="Math\vec4.h" />
     <ClInclude Include="GeKo\window.h" />
     <ClInclude Include="GeKo\Renderer\Shader.h" />
+    <ClInclude Include="GeKo\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Applications\KatiApplication\Shader\basic.shader" />
+    <None Include="Applications\KatiApplication\Shader\basic.frag" />
+    <None Include="Applications\KatiApplication\Shader\basic.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

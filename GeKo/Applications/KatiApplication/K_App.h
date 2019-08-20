@@ -13,6 +13,7 @@ public:
 private:
 	void init();
 	void render();
+	void update(float deltaTime);
 
 	gke::window w;
 	VertexBuffer vbo;

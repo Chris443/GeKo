@@ -10,6 +10,9 @@ K_App::K_App()
 
 void K_App::run() {
 
+	float oldTime = glfwGetTime();
+	float deltaTime = 0;
+
 	//game loop 
 	//TODO: use appropriate timestep
 	while (w.isOpen()) {
@@ -17,28 +20,19 @@ void K_App::run() {
 		gke::processInput(w.get_Handle());
 		glfwPollEvents();
 
+		deltaTime = glfwGetTime() - oldTime;
+		oldTime = glfwGetTime();
 		//update logic()
+		update(deltaTime);
 
 		render();
 	}
 }
 
 void K_App::init() {
-	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"}\0";
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-		"}\n\0";
 
-
-	shader.create(vertexShaderSource, fragmentShaderSource);
+	shader.create("./Applications/KatiApplication/Shader/basic.vert",
+		"./Applications/KatiApplication/Shader/basic.frag");
 
 	float vertices[] = {
 	 0.5f,  0.5f, 0.0f,  // top right
@@ -50,7 +44,6 @@ void K_App::init() {
 		0, 1, 3,   // first triangle
 		1, 2, 3    // second triangle
 	};
-
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -59,9 +52,6 @@ void K_App::init() {
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
- 
-
- 
 	glBindVertexArray(0);
 }
 
@@ -70,8 +60,18 @@ void K_App::render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader.bind();
+	gkm::vec3 t(0.0, 0.0, 1.0);
+	gkm::mat4 m;
+	
+	t.x += cos(glfwGetTime());
+
+	shader.setUniform3f("pos", t);
+
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 	w.swapBuffers();
+}
+
+void K_App::update(float deltaTime) {
+
 }

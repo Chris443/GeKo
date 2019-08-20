@@ -1,9 +1,14 @@
 #pragma once
 
 #include <string>
+#include <ostream>
+#include <fstream>
+#include <streambuf>
 #include <iostream>
 
 #include "glad/glad.h"
+
+#include "../../Math/vec3.h"
 
 class Shader
 {
@@ -15,6 +20,8 @@ public:
 
 	void bind();
 	void unbind();
+
+	void setUniform3f(const std::string& name, gkm::vec3 v);
 private:
 	int create_shader(GLenum shaderType, const GLchar* source);
 	void checkErrors(int shader,const std::string& shaderType);

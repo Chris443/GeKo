@@ -12,8 +12,17 @@ Shader::~Shader()
 	glDeleteProgram(m_id);
 }
 
-void Shader::create(const std::string& vertexShader, const std::string& fragmentShader) {
-	int vs = create_shader(GL_VERTEX_SHADER, vertexShader.c_str());
+void Shader::create(const std::string& vertexSource, const std::string& fragmentSource) {
+
+	std::ifstream t(vertexSource);
+	std::string vertexShader((std::istreambuf_iterator<char>(t)) ,
+							std::istreambuf_iterator<char>());
+	t = std::ifstream(fragmentSource);
+	std::string fragmentShader( (std::istreambuf_iterator<char>(t)) , std::istreambuf_iterator<char>());
+
+	
+
+	int vs = create_shader(GL_VERTEX_SHADER, vertexShader.c_str() );
 	int fs = create_shader(GL_FRAGMENT_SHADER, fragmentShader.c_str());
 	 
 
@@ -58,5 +67,8 @@ int Shader::create_shader(GLenum shaderType,const GLchar* source) {
 	return shader;
 }
 
+void Shader::setUniform3f(const std::string& name, gkm::vec3 v) {
+	glUniform3f(glGetUniformLocation(m_id,name.c_str()), v.x, v.y, v.z);
+}
 
 

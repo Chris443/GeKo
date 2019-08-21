@@ -21,7 +21,7 @@ private:
 	unsigned int VAO;
 	gke::Shader shader;
 
-	//imguistuff
-	bool show_demo_window = true;
-	bool show_another_window = false;
+	gkm::vec3 translation;
+	gkm::vec3 rotation;
+	gkm::vec3 scaling;
 };

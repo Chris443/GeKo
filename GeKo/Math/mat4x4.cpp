@@ -4,7 +4,7 @@ namespace gkm {
 
 	mat4::mat4()
 		:m{
-			{1.0, 0.0, 0.0, 0.0}, //first column
+			{1.0, 0.0, 0.0, 0.0}, //first row
 			{0.0, 1.0, 0.0, 0.0}, //2nd
 			{0.0, 0.0, 1.0, 0.0}, //3
 			{0.0, 0.0, 0.0, 1.0}  //4
@@ -109,15 +109,17 @@ namespace gkm {
 	*  1  0  0  0
 	*  0  1  0  0
 	*  0  0  1  0
-	* sx sy sz  1  4th column
+	* sx sy sz  1  4th row
 	*/
-	void mat4::translate(const vec3& v) {
-		m[3][0] = v.x;		
-		m[3][1] = v.y;
-		m[3][2] = v.z;
+	mat4 mat4::translate(const vec3& v) {
+		mat4 mat;
+		mat.m[3][0] = v.x;		
+		mat.m[3][1] = v.y;
+		mat.m[3][2] = v.z;
+		return mat;
 	}
 	// vector values correspond to rotation around given axis
-	void mat4::euler_rotate(gkm::vec3 euler_angles) {
+	mat4 mat4::euler_rotate(gkm::vec3 euler_angles) {
 		mat4 x_mat;
 		mat4 y_mat;
 		mat4 z_mat;
@@ -136,12 +138,14 @@ namespace gkm {
 		z_mat.m[1][0] = -gkm::d_sin(euler_angles.z);
 		z_mat.m[1][1] = gkm::d_cos(euler_angles.z);
 		//picked this order for no particular reason, rotating with 3 matrices sucks anyways
-		*this = x_mat * y_mat * z_mat * (*this) ;
+		return x_mat * y_mat * z_mat;
 	}
 
-	void mat4::scale(const vec3& v) {
-		m[0][0] = v.x;
-		m[1][1] = v.y;
-		m[2][2] = v.z;
+	mat4 mat4::scale(const vec3& v) {
+		mat4 smat; 
+		smat.m[0][0] = v.x;
+		smat.m[1][1] = v.y;
+		smat.m[2][2] = v.z;
+		return smat;
 	}
 }

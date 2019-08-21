@@ -3,7 +3,7 @@
 * @author Christian Kati
 *
 * @brief Basic matrix class for mathematical operations
-		 uses COLUMN_MAJOR by default
+		 uses ROW_MAJOR by default
 *
 *	- optimizations like SSE intrinsics, loop blocking/tiling, cache optimization, whatever are neglected
 * @TODO:
@@ -31,9 +31,9 @@ namespace gkm {
 
 
 		void transpose();
-		void translate(const vec3& v);
-		void euler_rotate(gkm::vec3 euler_angles);
-		void scale(const vec3& v);
+		mat4 translate(const vec3& v);
+		mat4 euler_rotate(gkm::vec3 euler_angles);
+		mat4 scale(const vec3& v);
 
 		mat4 operator+(const float& scalar);
 		mat4 operator-(const float& scalar);

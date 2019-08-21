@@ -44,7 +44,8 @@ void K_App::run() {
 	ImGui::DestroyContext();
 }
 
-void K_App::init() {
+void K_App::init(){
+	scaling = gkm::vec3(1, 1, 1);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	shader.create("./Applications/KatiApplication/Shader/basic.vert",
 		"./Applications/KatiApplication/Shader/basic.frag");
@@ -78,30 +79,18 @@ void K_App::render() {
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 	{
-		static float f = 0.0f;
-		static int counter = 0;
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
-
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
+		ImGui::Begin("Gui!");                     
+		ImGui::SliderFloat3("Translation", &translation.x, -1.0f, 1.0f);   
+		ImGui::SliderFloat3("Rotation", &rotation.x, 0.0f, 360.0f);
+		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 1.0f);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
 
-	ImGui::Render();
 
+	ImGui::Render();
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -114,21 +103,17 @@ void K_App::render() {
 }
 
 void K_App::update(float deltaTime) {
+	gkm::mat4 modelMat;
+
+	//row order
+	/*modelMat = modelMat * modelMat.scale(scaling);
+	modelMat = modelMat * modelMat.euler_rotate(rotation);
+	modelMat = modelMat * modelMat.translate(translation);*/
+	modelMat =  modelMat.scale(scaling)* modelMat.euler_rotate(rotation) *  modelMat.translate(translation);
+
+	//column order
+//	modelMat = modelMat.translate(translation) * modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
 
 
-	gkm::vec3 t(0.0, 0.0, 1.0);
-	gkm::mat4 m;
-	float v = static_cast<float>(glfwGetTime() * 30);
-
-	t.x = gkm::d_cos(v);
-
-	gkm::mat4 transformMat;
-
-	//transformMat.translate(gkm::vec3(gkm::d_cos(v),0,0));	
-	transformMat.euler_rotate( gkm::vec3(0,v,v) );
-	//transformMat.euler_rotate(gkm::vec3(0, v, 0));
-	
-
-
-	shader.setMat4("mat", transformMat);
+	shader.setMat4("mat", modelMat);
 }

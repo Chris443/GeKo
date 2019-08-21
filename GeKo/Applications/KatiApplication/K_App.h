@@ -16,8 +16,8 @@ private:
 	void update(float deltaTime);
 
 	gke::window w;
-	VertexBuffer vbo;
-	IndexBuffer ebo;
+	gke::VertexBuffer vbo;
+	gke::IndexBuffer ebo;
 	unsigned int VAO;
-	Shader shader;
+	gke::Shader shader;
 };

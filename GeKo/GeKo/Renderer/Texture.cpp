@@ -2,11 +2,13 @@
 
 #include "stb_image.h"
 
-Texture::Texture()
-{
-}
+namespace gke {
+	Texture::Texture()
+	{
+	}
 
 
-Texture::~Texture()
-{
+	Texture::~Texture()
+	{
+	}
 }

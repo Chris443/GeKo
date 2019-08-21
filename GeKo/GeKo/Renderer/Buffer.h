@@ -2,33 +2,37 @@
  
 #include "glad/glad.h"
 
-class VertexBuffer
-{
-public:
+namespace gke {
 
-	VertexBuffer();
+	class VertexBuffer
+	{
+	public:
 
-	void create(float* vertices, int size);
-	~VertexBuffer();
+		VertexBuffer();
 
-	void bind();
-	void unbind();
-private:
-	GLuint id;
-};
+		void create(float* vertices, int size);
+		~VertexBuffer();
+
+		void bind();
+		void unbind();
+	private:
+		GLuint id;
+	};
 
 
-class IndexBuffer
-{
-public:
+	class IndexBuffer
+	{
+	public:
 
-	IndexBuffer();
+		IndexBuffer();
 
-	void create(unsigned int* indices, int size);
-	~IndexBuffer();
+		void create(unsigned int* indices, int size);
+		~IndexBuffer();
 
-	void bind();
-	void unbind();
-private:
-	GLuint id;
-};
+		void bind();
+		void unbind();
+	private:
+		GLuint id;
+	};
+
+}

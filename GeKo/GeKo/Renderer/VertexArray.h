@@ -7,10 +7,13 @@
 *	-Use one Global Vertex Array and always bind the Buffers  (better according to NVIDIA benchmarks)
 */
 
-class VertexArray
-{
-public:
-	VertexArray();
-	~VertexArray();
-};
+namespace gke {
 
+	class VertexArray
+	{
+	public:
+		VertexArray();
+		~VertexArray();
+	};
+
+}

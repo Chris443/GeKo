@@ -11,25 +11,28 @@
 #include "../../Math/vec3.h"
 #include "../../Math/mat4x4.h"
 
-class Shader
-{
-public:
-	Shader();
-	~Shader();
+namespace gke {
 
-	void create(const std::string& vertexShader, const std::string& fragmentShader);
+	class Shader
+	{
+	public:
+		Shader();
+		~Shader();
 
-	void bind();
-	void unbind();
+		void create(const std::string& vertexShader, const std::string& fragmentShader);
 
-	void setVec3(const std::string& name, gkm::vec3 v);
-	void setMat4(const std::string& name, gkm::mat4 m);
-private:
-	int create_shader(GLenum shaderType, const GLchar* source);
-	void checkErrors(int shader,const std::string& shaderType);
+		void bind();
+		void unbind();
 
-	int m_id;
-	int m_vertexShader;
-	int m_fragmentShader;
-};
+		void setVec3(const std::string& name, gkm::vec3 v);
+		void setMat4(const std::string& name, gkm::mat4 m);
+	private:
+		int create_shader(GLenum shaderType, const GLchar* source);
+		void checkErrors(int shader, const std::string& shaderType);
 
+		int m_id;
+		int m_vertexShader;
+		int m_fragmentShader;
+	};
+
+}

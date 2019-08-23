@@ -72,6 +72,9 @@
     <ClCompile Include="ImGui\imgui_impl_opengl3.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="GeKo\Renderer\stb_image.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\KatiApplication\K_App.h">
@@ -144,5 +147,11 @@
   <ItemGroup>
     <None Include="Applications\KatiApplication\Shader\basic.frag" />
     <None Include="Applications\KatiApplication\Shader\basic.vert" />
+    <None Include="Applications\KatiApplication\Data.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Applications\KatiApplication\res\Textures\wall.jpg">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
 #include "K_App.h"
+#include "Data.h"
+#include "../../GeKo/Renderer/stb_image.h"
 
 #include "../../ImGui/imgui.h"
 #include "../../ImGui/imgui_impl_glfw.h"
@@ -45,32 +47,24 @@ void K_App::run() {
 }
 
 void K_App::init(){
+	glEnable(GL_DEPTH_TEST);
 	scaling = gkm::vec3(1, 1, 1);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	shader.create("./Applications/KatiApplication/Shader/basic.vert",
 		"./Applications/KatiApplication/Shader/basic.frag");
 
-	float vertices[] = {
-	//positions			//colors
-	 0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,// top right
-	 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,// bottom right
-	-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,// bottom left
-	-0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f,// top left 
-	};
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 2,     // second triangle
-		3, 0, 2   // first triangle
-	};
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	vbo.create(vertices, sizeof(vertices));
-	ebo.create(indices, sizeof(indices));
+	ebo.create(&indices[0], indices.size() * sizeof(float) );
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float) ));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float) ));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 	glBindVertexArray(0);
 }
 
@@ -93,24 +87,20 @@ void K_App::render() {
 	ImGui::Render();
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	shader.bind();
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	w.swapBuffers();
 }
 
 void K_App::update(float deltaTime) {
+	gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
+	
 	gkm::mat4 modelMat;
-
-	//row order
-	/*modelMat = modelMat * modelMat.scale(scaling);
-	modelMat = modelMat * modelMat.euler_rotate(rotation);
-	modelMat = modelMat * modelMat.translate(translation);*/
-	//modelMat =  modelMat.scale(scaling)* modelMat.euler_rotate(rotation) *  modelMat.translate(translation);
-
+ 
 	//column order
 	modelMat = modelMat.translate(translation) *modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
 

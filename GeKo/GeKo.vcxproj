@@ -125,6 +125,7 @@
     <ClCompile Include="Applications\KatiApplication\K_App.cpp" />
     <ClCompile Include="GeKo\Renderer\Buffer.cpp" />
     <ClCompile Include="GeKo\GUI\Gui.cpp" />
+    <ClCompile Include="GeKo\Renderer\stb_image.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
     <ClCompile Include="ImGui\imgui_draw.cpp" />
@@ -165,8 +166,12 @@
     <ClInclude Include="GeKo\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Applications\KatiApplication\Data.h" />
     <None Include="Applications\KatiApplication\Shader\basic.frag" />
     <None Include="Applications\KatiApplication\Shader\basic.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Applications\KatiApplication\res\Textures\wall.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,7 @@
 #include "../../Math/fwd.h"
 #include "../../GeKo/Renderer/Buffer.h"
 #include "../../GeKo/Renderer/Shader.h"
+#include "../../GeKo/Renderer/Texture.h"
 
 class K_App {
 public:

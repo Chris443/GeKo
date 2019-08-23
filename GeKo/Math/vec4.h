@@ -7,7 +7,7 @@
 *	Ideas for improvement:
 *	-x,y,z as union/array
 *	-reworking lhs and rhs operators
-*	-templating -> using no .cpp
+*	-templating -> no .cpp
 */
 #pragma once
 

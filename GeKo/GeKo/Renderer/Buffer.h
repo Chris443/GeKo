@@ -1,5 +1,12 @@
 #pragma once
  
+/**
+* @class Buffer class
+* @author Christian Kati
+* @brief Basic Buffer Wrapper for Opengl Indeex/Vertexbuffers
+*/
+
+
 #include "glad/glad.h"
 
 namespace gke {

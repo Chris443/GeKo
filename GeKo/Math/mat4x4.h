@@ -3,7 +3,7 @@
 * @author Christian Kati
 *
 * @brief Basic matrix class for mathematical operations
-		 uses ROW_MAJOR by default
+		 Operations use Column Major by default
 *
 *	- optimizations like SSE intrinsics, loop blocking/tiling, cache optimization, whatever are neglected
 * @TODO:

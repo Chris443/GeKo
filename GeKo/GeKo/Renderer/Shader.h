@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+* @class Shader class
+* @author Christian Kati
+*/
+
 #include <string>
 #include <ostream>
 #include <fstream>

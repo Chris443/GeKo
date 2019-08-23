@@ -109,10 +109,10 @@ void K_App::update(float deltaTime) {
 	/*modelMat = modelMat * modelMat.scale(scaling);
 	modelMat = modelMat * modelMat.euler_rotate(rotation);
 	modelMat = modelMat * modelMat.translate(translation);*/
-	modelMat =  modelMat.scale(scaling)* modelMat.euler_rotate(rotation) *  modelMat.translate(translation);
+	//modelMat =  modelMat.scale(scaling)* modelMat.euler_rotate(rotation) *  modelMat.translate(translation);
 
 	//column order
-//	modelMat = modelMat.translate(translation) * modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
+	modelMat = modelMat.translate(translation) *modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
 
 
 	shader.setMat4("mat", modelMat);

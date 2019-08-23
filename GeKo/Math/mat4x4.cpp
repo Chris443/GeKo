@@ -81,12 +81,13 @@ namespace gkm {
 		return *this;
 	}
 
+	//Matrix multiplication is adjusted for column-major multiplication
 	mat4 mat4::operator*(const mat4& other) {
 		mat4 t(0);
 		for (int i = 0; i < 4; ++i) {
 			for (int j = 0; j < 4; ++j) {
 				for (int k = 0; k < 4; ++k) {
-					t.m[i][j] += m[i][k] * other.m[k][j];
+					t.m[i][j] += m[k][i] * other.m[j][k]; 
 				}
 			}
 		}
@@ -109,7 +110,7 @@ namespace gkm {
 	*  1  0  0  0
 	*  0  1  0  0
 	*  0  0  1  0
-	* sx sy sz  1  4th row
+	* sx sy sz  1  4th column
 	*/
 	mat4 mat4::translate(const vec3& v) {
 		mat4 mat;

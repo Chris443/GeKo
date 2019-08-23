@@ -7,6 +7,9 @@
 #include "../../GeKo/Renderer/Shader.h"
 #include "../../GeKo/Renderer/Texture.h"
 
+const float scr_width = 800.0f;
+const float scr_height = 600.0f;
+
 class K_App {
 public:
 	K_App();
@@ -25,4 +28,7 @@ private:
 	gkm::vec3 translation;
 	gkm::vec3 rotation;
 	gkm::vec3 scaling;
+
+	bool orthographic;
+
 };

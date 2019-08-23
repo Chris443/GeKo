@@ -149,4 +149,33 @@ namespace gkm {
 		smat.m[2][2] = v.z;
 		return smat;
 	}
+
+	mat4 perspective(float r, float l, float b, float t, float n, float f) {
+		mat4 persp;
+		persp.m[0][0] = 2*n / (r - l);
+		persp.m[1][1] = 2 * n / (t - b);
+		persp.m[2][2] = - (f + n) / (f - n);
+		persp.m[3][2] = - (2 * f*n) / (f - n);
+		persp.m[3][3] = 0;
+		persp.m[2][0] = (r + l) / (r - l);
+		persp.m[2][1] = (t + b) / (t - b);
+		persp.m[2][3] = -1;
+		return persp;
+	}
+
+	mat4 ortographic(float left, float right, float bottom, float top, float near, float far) {
+		mat4 ortho;
+		ortho.m[0][0] = 2.0f / (right-left);
+		ortho.m[1][1] = 2.0f / (top-bottom);
+		ortho.m[2][2] = -2.0f / (far - near);
+		ortho.m[3][0] = - (right + left) / (right - left);
+		ortho.m[3][1] = -(top + bottom) / (top - bottom);
+		ortho.m[3][2] = -(far + near) / (far - near);
+		return ortho;
+	}
+
+	mat4 lookAt() {
+		mat4 m;
+		return m;
+	}
 }

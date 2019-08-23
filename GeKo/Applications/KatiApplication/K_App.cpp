@@ -7,7 +7,7 @@
 #include "../../ImGui/imgui_impl_opengl3.h"
 
 K_App::K_App()
-	:w(1200, 800, "Example")
+	:w(scr_width, scr_height, "Example"), orthographic(false)
 {
 	init();
 }
@@ -48,7 +48,7 @@ void K_App::run() {
 
 void K_App::init(){
 	glEnable(GL_DEPTH_TEST);
-	scaling = gkm::vec3(1, 1, 1);
+	scaling = gkm::vec3(0.5, 0.5, 0.5);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	shader.create("./Applications/KatiApplication/Shader/basic.vert",
 		"./Applications/KatiApplication/Shader/basic.frag");
@@ -76,9 +76,10 @@ void K_App::render() {
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		ImGui::Begin("Gui!");                     
-		ImGui::SliderFloat3("Translation", &translation.x, -1.0f, 1.0f);   
+		ImGui::SliderFloat3("Translation", &translation.x, -100.0f, 100.0f);   
 		ImGui::SliderFloat3("Rotation", &rotation.x, 0.0f, 360.0f);
-		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 10.0f);
+		ImGui::Checkbox("Orthographic" , &orthographic);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
@@ -89,6 +90,7 @@ void K_App::render() {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	shader.bind();
+	//texture.bind()
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
@@ -100,10 +102,26 @@ void K_App::update(float deltaTime) {
 	gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
 	
 	gkm::mat4 modelMat;
+	gkm::mat4 viewMat;
+	gkm::mat4 projectionMat;
+
+	viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, 0.0f));
+
+	//projectionMat = gkm::perspective(0.0f, scr_width, 0.0f, scr_height, 0.1f, 10.0f);
+	//projectionMat = gkm::ortographic(0.0f, scr_width, 0.0f, scr_height, 0.1f, 10.0f);
  
+	if (orthographic) {
+		float aspectRatio = scr_width / scr_height;
+		projectionMat = gkm::ortographic(-aspectRatio,aspectRatio,-aspectRatio,aspectRatio,-1.0f,10.0f);
+	}
+	
+	//rotation.y = glfwGetTime()*50;
+	//rotation.x = glfwGetTime()*50;
 	//column order
 	modelMat = modelMat.translate(translation) *modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
 
 
 	shader.setMat4("mat", modelMat);
+	shader.setMat4("view", viewMat);
+	shader.setMat4("proj", projectionMat);
 }

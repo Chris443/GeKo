@@ -49,4 +49,6 @@ namespace gkm {
 	private:
 
 	};
+	mat4 perspective(float r, float l, float b, float t, float n, float f);
+	mat4 ortographic(float left, float right, float bottom, float top, float near, float far);
 }

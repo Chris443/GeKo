@@ -29,6 +29,7 @@ private:
 	gkm::vec3 translation;
 	gkm::vec3 rotation;
 	gkm::vec3 scaling;
+	float FoV;
 
 	bool orthographic;
 

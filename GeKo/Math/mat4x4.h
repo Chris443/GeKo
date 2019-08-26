@@ -3,8 +3,17 @@
 * @author Christian Kati
 *
 * @brief Basic matrix class for mathematical operations
-		 Operations use Column Major by default
-*
+		 Column Major Layout:
+		0 4  8 12
+		1 5  9 13
+		2 6 10 14
+		3 7 11 15
+		Matrix is sequential in memory:
+		0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+		--> all operations are adjusted for column major matrices
+		0 4 8 12 1 5 9 13 2 6 10 14 3 7 11 15
+
+		[column][row] (reversed, to pick correct value)
 *	- optimizations like SSE intrinsics, loop blocking/tiling, cache optimization, whatever are neglected
 * @TODO:
 *   -templating
@@ -52,6 +61,6 @@ namespace gkm {
 	private:
 
 	};
-	mat4 perspective(float r, float l, float b, float t, float n, float f);
+	mat4 perspective(float fov, float aspectRatio, float near, float far);
 	mat4 ortographic(float left, float right, float bottom, float top, float near, float far);
 }

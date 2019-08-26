@@ -11,7 +11,7 @@
 #include "../../glm/gtc/type_ptr.hpp"
 
 K_App::K_App()
-	:w(scr_width, scr_height, "Example"), orthographic(false)
+	:w(scr_width, scr_height, "Example"), orthographic(false), FoV(90.0f)
 {
 	init();
 }
@@ -80,9 +80,10 @@ void K_App::render() {
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		ImGui::Begin("Gui!");                     
-		ImGui::SliderFloat3("Translation", &translation.x, -1.0f, 1.0f);   
+		ImGui::SliderFloat3("Translation", &translation.x, -10.0f, 10.0f);   
 		ImGui::SliderFloat3("Rotation", &rotation.x, 0.0f, 360.0f);
 		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 10.0f);
+		ImGui::SliderFloat("FoV", &FoV,0.0f, 360.0f);
 		ImGui::Checkbox("Orthographic" , &orthographic);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
@@ -109,19 +110,16 @@ void K_App::update(float deltaTime) {
 	gkm::mat4 modelMat;
 	gkm::mat4 viewMat;
 	gkm::mat4 projectionMat;
-
-	//viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, -3.0f));
+	viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, -1.0f));
 
 	float aspectRatio = scr_width / scr_height;
-	//projectionMat = gkm::perspective(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, -1.0f, 100.0f);
-	//projectionMat = gkm::ortographic(0.0f, scr_width, 0.0f, scr_height, 0.1f, 10.0f);
+	projectionMat = gkm::perspective(gkm::degree_to_radians(FoV), aspectRatio,0.1f, 100.0f);
 
 	if (orthographic) {
 		float aspectRatio = scr_width / scr_height;
-		projectionMat = gkm::ortographic(-aspectRatio,aspectRatio,-aspectRatio,aspectRatio,-1.0f,10.0f);
+		projectionMat = gkm::ortographic(-aspectRatio,aspectRatio,-aspectRatio, aspectRatio,0.1f ,100.0f);
 	}
  
-
 	//column order
 	modelMat *=  modelMat.translate(translation);
 	modelMat *=  modelMat.euler_rotate(rotation);

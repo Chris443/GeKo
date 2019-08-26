@@ -26,6 +26,7 @@ namespace gkm {
 		~mat4();
 		//diagonal is set to n
 		mat4(float n);
+		mat4(float* other);
 
 		mat4(const mat4& other);
 
@@ -43,6 +44,8 @@ namespace gkm {
 		mat4 operator-(const mat4& other);
 		mat4 operator*(const mat4& other);
 		vec4 operator*(const vec4& v);
+
+		mat4& operator*=(const mat4& other);
 
 
 		float m[4][4];

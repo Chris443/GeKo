@@ -6,6 +6,10 @@
 #include "../../ImGui/imgui_impl_glfw.h"
 #include "../../ImGui/imgui_impl_opengl3.h"
 
+#include "../../glm/glm.hpp"
+#include "../../glm/gtc/matrix_transform.hpp"
+#include "../../glm/gtc/type_ptr.hpp"
+
 K_App::K_App()
 	:w(scr_width, scr_height, "Example"), orthographic(false)
 {
@@ -76,7 +80,7 @@ void K_App::render() {
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 		ImGui::Begin("Gui!");                     
-		ImGui::SliderFloat3("Translation", &translation.x, -100.0f, 100.0f);   
+		ImGui::SliderFloat3("Translation", &translation.x, -1.0f, 1.0f);   
 		ImGui::SliderFloat3("Rotation", &rotation.x, 0.0f, 360.0f);
 		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 10.0f);
 		ImGui::Checkbox("Orthographic" , &orthographic);
@@ -100,25 +104,29 @@ void K_App::render() {
 
 void K_App::update(float deltaTime) {
 	gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
+	gkm::mat4 identityMat;
 	
 	gkm::mat4 modelMat;
 	gkm::mat4 viewMat;
 	gkm::mat4 projectionMat;
 
-	viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, 0.0f));
+	//viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, -3.0f));
 
-	//projectionMat = gkm::perspective(0.0f, scr_width, 0.0f, scr_height, 0.1f, 10.0f);
+	float aspectRatio = scr_width / scr_height;
+	//projectionMat = gkm::perspective(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, -1.0f, 100.0f);
 	//projectionMat = gkm::ortographic(0.0f, scr_width, 0.0f, scr_height, 0.1f, 10.0f);
- 
+
 	if (orthographic) {
 		float aspectRatio = scr_width / scr_height;
 		projectionMat = gkm::ortographic(-aspectRatio,aspectRatio,-aspectRatio,aspectRatio,-1.0f,10.0f);
 	}
-	
-	//rotation.y = glfwGetTime()*50;
-	//rotation.x = glfwGetTime()*50;
+ 
+
 	//column order
-	modelMat = modelMat.translate(translation) *modelMat.euler_rotate(rotation) *  modelMat.scale(scaling);
+	modelMat *=  modelMat.translate(translation);
+	modelMat *=  modelMat.euler_rotate(rotation);
+	modelMat *=  modelMat.scale(scaling);
+
 
 
 	shader.setMat4("mat", modelMat);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "../../glm/gtx/euler_angles.hpp"
 #include "../../GeKo/window.h"
 #include "../../Math/fwd.h"
 #include "../../GeKo/Renderer/Buffer.h"

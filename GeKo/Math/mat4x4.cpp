@@ -140,8 +140,8 @@ namespace gkm {
 	mat4 mat4::translate(const vec3& v) {
 		mat4 mat;
 		mat.m[3][0] = v.x;		
-		mat.m[3][2] = v.z;
 		mat.m[3][1] = v.y;
+		mat.m[3][2] = v.z;
 		return mat;
 	}
 	/*
@@ -206,8 +206,33 @@ namespace gkm {
 		return ortho;
 	}
 
-	mat4 lookAt() {
-		mat4 m;
-		return m;
+	mat4 lookAt(const gkm::vec3& pos, const gkm::vec3& look, const gkm::vec3& up) {
+		gkm::mat4 viewRot,viewTrans;
+
+		gkm::vec3 forward(pos - look);
+		forward.normalize();
+		gkm::vec3 right(gkm::cross(up, forward));
+		right.normalize();
+		gkm::vec3 up_vec(gkm::cross(forward, right));
+	//	up_vec.normalize();
+
+		viewRot.m[0][0] = right.x;
+		viewRot.m[0][1] = up_vec.x;
+		viewRot.m[0][2] = forward.x;
+		
+		viewRot.m[1][0] = right.y;
+		viewRot.m[1][1] = up_vec.y;
+		viewRot.m[1][2] = forward.y;
+		
+		viewRot.m[2][0] = right.z;
+		viewRot.m[2][1] = up_vec.z;
+		viewRot.m[2][2] = forward.z;
+
+		viewTrans.m[3][0] = -pos.x;
+		viewTrans.m[3][1] = -pos.y;
+		viewTrans.m[3][2] = -pos.z;
+
+
+		return viewRot * viewTrans;
 	}
 }

@@ -97,7 +97,63 @@ void K_App::render() {
 	shader.bind();
 	//texture.bind()
 	glBindVertexArray(VAO);
+
+	gkm::vec3 cubePositions[] = {
+		gkm::vec3(0.0f,0.0f,0.0f),
+		gkm::vec3(2.0f,0.0f,-15.0f),
+		gkm::vec3(-1.5f,0.0f,-2.0f)
+	};
+
+
+		gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
+		gkm::mat4 viewMat;
+		gkm::mat4 projectionMat;
+
+		gkm::vec3 cameraPos(0.0f,0.0f,3.0f);
+
+		gkm::vec3 mid;
+		gkm::vec3 up(0, 1, 0);
+
+		float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+
+		cameraPos = gkm::vec3(camX,0.0f,camZ);
+
+		viewMat = gkm::lookAt(cameraPos, mid);
+
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				std::cout << viewMat.m[j][i] << "\t";
+			}
+			std::cout << std::endl;
+		}
+
+
+		float aspectRatio = scr_width / scr_height;
+		projectionMat = gkm::perspective(gkm::degree_to_radians(FoV), aspectRatio, 0.1f, 100.0f);
+
+		if (orthographic) {
+			float aspectRatio = scr_width / scr_height;
+			projectionMat = gkm::ortographic(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, 0.1f, 100.0f);
+		}
+	//update objects
+	for (int i = 0; i < 3; ++i) {
+
+		gkm::mat4 modelMat;
+
+
+		//column order
+		modelMat *= modelMat.translate(cubePositions[i] + translation);
+		modelMat *= modelMat.euler_rotate(rotation);
+		modelMat *= modelMat.scale(scaling);
+
+		shader.setMat4("mat", modelMat);
+		shader.setMat4("view", viewMat);
+		shader.setMat4("proj", projectionMat);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	}
+
 
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	w.swapBuffers();
@@ -105,7 +161,6 @@ void K_App::render() {
 
 void K_App::update(float deltaTime) {
 	gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
-	gkm::mat4 identityMat;
 	
 	gkm::mat4 modelMat;
 	gkm::mat4 viewMat;

@@ -123,6 +123,7 @@
     <ClCompile Include="..\vendor\GLAD\src\glad.c" />
     <ClCompile Include="Applications\GebertApplication\G_App.cpp" />
     <ClCompile Include="Applications\KatiApplication\K_App.cpp" />
+    <ClCompile Include="GeKo\Renderer\Camera.cpp" />
     <ClCompile Include="GeKo\Renderer\Buffer.cpp" />
     <ClCompile Include="GeKo\GUI\Gui.cpp" />
     <ClCompile Include="GeKo\Renderer\stb_image.cpp" />
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Applications\GebertApplication\G_App.h" />
     <ClInclude Include="Applications\KatiApplication\K_App.h" />
+    <ClInclude Include="GeKo\Renderer\Camera.h" />
     <ClInclude Include="GeKo\Renderer\Buffer.h" />
     <ClInclude Include="GeKo\Renderer\stb_image.h" />
     <ClInclude Include="GeKo\GUI\Gui.h" />

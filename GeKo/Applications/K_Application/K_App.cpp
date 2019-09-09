@@ -11,7 +11,8 @@
 #include "../../glm/gtc/type_ptr.hpp"
 
 K_App::K_App()
-	:w(scr_width, scr_height, "Example"), orthographic(false), FoV(90.0f)
+	:w(scr_width, scr_height, "Example"), orthographic(false), FoV(90.0f),
+	cam(gkm::vec3(0.0f,0.0f,5.0f), gkm::vec3(0.0f,0.0f,0.0f))
 {
 	init();
 }
@@ -31,9 +32,10 @@ void K_App::run() {
 
 	while (w.isOpen()) {
 		//process input (TODO: via input handler)
-		gke::processInput(w.get_Handle());
+		//gke::processInput(&w);
 		glfwPollEvents();
-
+		inputmanager.processInput(w.get_Handle());
+		
 		deltaTime = static_cast<float>(glfwGetTime()) - oldTime;
 		oldTime = static_cast<float>(glfwGetTime());
 		//update logic()
@@ -54,8 +56,8 @@ void K_App::init(){
 	glEnable(GL_DEPTH_TEST);
 	scaling = gkm::vec3(0.5, 0.5, 0.5);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	shader.create("./Applications/KatiApplication/Shader/basic.vert",
-		"./Applications/KatiApplication/Shader/basic.frag");
+	shader.create("./Applications/K_Application/Shader/basic.vert",
+		"./Applications/K_Application/Shader/basic.frag");
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
@@ -70,6 +72,8 @@ void K_App::init(){
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 	glBindVertexArray(0);
+
+	gke::Texture texture("./Applications/K_Application/res/Textures/wall.jpg");
 }
 
 void K_App::render() {
@@ -105,43 +109,10 @@ void K_App::render() {
 	};
 
 
-		gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
-		gkm::mat4 viewMat;
-		gkm::mat4 projectionMat;
-
-		gkm::vec3 cameraPos(0.0f,0.0f,3.0f);
-
-		gkm::vec3 mid;
-		gkm::vec3 up(0, 1, 0);
-
-		float radius = 10.0f;
-		float camX = sin(glfwGetTime()) * radius;
-		float camZ = cos(glfwGetTime()) * radius;
-
-		cameraPos = gkm::vec3(camX,0.0f,camZ);
-
-		viewMat = gkm::lookAt(cameraPos, mid);
-
-		for (int i = 0; i < 4; ++i) {
-			for (int j = 0; j < 4; ++j) {
-				std::cout << viewMat.m[j][i] << "\t";
-			}
-			std::cout << std::endl;
-		}
-
-
-		float aspectRatio = scr_width / scr_height;
-		projectionMat = gkm::perspective(gkm::degree_to_radians(FoV), aspectRatio, 0.1f, 100.0f);
-
-		if (orthographic) {
-			float aspectRatio = scr_width / scr_height;
-			projectionMat = gkm::ortographic(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, 0.1f, 100.0f);
-		}
 	//update objects
 	for (int i = 0; i < 3; ++i) {
 
 		gkm::mat4 modelMat;
-
 
 		//column order
 		modelMat *= modelMat.translate(cubePositions[i] + translation);
@@ -149,7 +120,7 @@ void K_App::render() {
 		modelMat *= modelMat.scale(scaling);
 
 		shader.setMat4("mat", modelMat);
-		shader.setMat4("view", viewMat);
+		shader.setMat4("view", cam.getViewMatrix());
 		shader.setMat4("proj", projectionMat);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
@@ -160,29 +131,32 @@ void K_App::render() {
 }
 
 void K_App::update(float deltaTime) {
-	gke::Texture texture("./Applications/KatiApplication/res/Textures/wall.jpg");
-	
-	gkm::mat4 modelMat;
-	gkm::mat4 viewMat;
-	gkm::mat4 projectionMat;
-	viewMat = viewMat.translate(gkm::vec3(0.0f, 0.0f, -1.0f));
-
+	/*************proj mat**************/
 	float aspectRatio = scr_width / scr_height;
-	projectionMat = gkm::perspective(gkm::degree_to_radians(FoV), aspectRatio,0.1f, 100.0f);
+	projectionMat = gkm::perspective(gkm::degree_to_radians(FoV), aspectRatio, 0.1f, 100.0f);
 
 	if (orthographic) {
 		float aspectRatio = scr_width / scr_height;
-		projectionMat = gkm::ortographic(-aspectRatio,aspectRatio,-aspectRatio, aspectRatio,0.1f ,100.0f);
+		projectionMat = gkm::ortographic(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, 0.1f, 100.0f);
 	}
- 
-	//column order
-	modelMat *=  modelMat.translate(translation);
-	modelMat *=  modelMat.euler_rotate(rotation);
-	modelMat *=  modelMat.scale(scaling);
+	/**********************************/
+
+	float velocity = 0.05f;
+	if (inputmanager.is_pressed(gke::GKE_KEY::W))
+		cam.processMovement(gke::Movement::FORWARD, deltaTime);
+	if (inputmanager.is_pressed(gke::GKE_KEY::S))
+		cam.processMovement(gke::Movement::BACKWARD, deltaTime);
+	if (inputmanager.is_pressed(gke::GKE_KEY::A))
+		cam.processMovement(gke::Movement::LEFT, deltaTime);
+	if (inputmanager.is_pressed(gke::GKE_KEY::D))
+		cam.processMovement(gke::Movement::RIGHT, deltaTime);
+		//	cam.setPosition();
+
+
+		//	cam.updateCamera();
+
+	cam.updateCamera();
 
 
 
-	shader.setMat4("mat", modelMat);
-	shader.setMat4("view", viewMat);
-	shader.setMat4("proj", projectionMat);
 }

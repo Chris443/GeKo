@@ -121,8 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\GLAD\src\glad.c" />
-    <ClCompile Include="Applications\GebertApplication\G_App.cpp" />
-    <ClCompile Include="Applications\KatiApplication\K_App.cpp" />
+    <ClCompile Include="Applications\K_Application\K_App.cpp" />
     <ClCompile Include="GeKo\Renderer\Camera.cpp" />
     <ClCompile Include="GeKo\Renderer\Buffer.cpp" />
     <ClCompile Include="GeKo\GUI\Gui.cpp" />
@@ -133,6 +132,7 @@
     <ClCompile Include="ImGui\imgui_impl_glfw.cpp" />
     <ClCompile Include="ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="GeKo\InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math\mat4x4.cpp" />
     <ClCompile Include="Math\vec3.cpp" />
@@ -143,8 +143,7 @@
     <ClCompile Include="GeKo\Renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Applications\GebertApplication\G_App.h" />
-    <ClInclude Include="Applications\KatiApplication\K_App.h" />
+    <ClInclude Include="Applications\K_Application\K_App.h" />
     <ClInclude Include="GeKo\Renderer\Camera.h" />
     <ClInclude Include="GeKo\Renderer\Buffer.h" />
     <ClInclude Include="GeKo\Renderer\stb_image.h" />
@@ -157,6 +156,7 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="GeKo\InputManager.h" />
     <ClInclude Include="Math\const.h" />
     <ClInclude Include="Math\fwd.h" />
     <ClInclude Include="Math\mat4x4.h" />
@@ -168,12 +168,12 @@
     <ClInclude Include="GeKo\Renderer\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Applications\KatiApplication\Data.h" />
-    <None Include="Applications\KatiApplication\Shader\basic.frag" />
-    <None Include="Applications\KatiApplication\Shader\basic.vert" />
+    <None Include="Applications\K_Application\Data.h" />
+    <None Include="Applications\K_Application\Shader\basic.frag" />
+    <None Include="Applications\K_Application\Shader\basic.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Applications\KatiApplication\res\Textures\wall.jpg" />
+    <Image Include="Applications\K_Application\res\Textures\wall.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

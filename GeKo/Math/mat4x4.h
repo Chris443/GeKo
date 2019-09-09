@@ -64,5 +64,5 @@ namespace gkm {
 	mat4 perspective(float fov, float aspectRatio, float near, float far);
 	mat4 ortographic(float left, float right, float bottom, float top, float near, float far);
 
-	mat4 lookAt(const gkm::vec3& eye, const gkm::vec3& center, const gkm::vec3& up = gkm::vec3(0.0f,1.0f,0.0f) );
+	mat4 lookAt(const gkm::vec3& pos, const gkm::vec3& lookAt, const gkm::vec3& up = gkm::vec3(0.0f, 1.0f, 0.0f));
 }

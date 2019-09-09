@@ -1,8 +1,7 @@
 
 #include <iostream>
 
-#include "Applications/KatiApplication/K_App.h"
-#include "Applications/GebertApplication/G_App.h"
+#include "Applications/K_Application/K_App.h"
 
  
 #include <Windows.h>

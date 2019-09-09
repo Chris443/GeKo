@@ -3,10 +3,12 @@
 #include <iostream>
 #include "../../glm/gtx/euler_angles.hpp"
 #include "../../GeKo/window.h"
+#include "../../GeKo/InputManager.h"
 #include "../../Math/fwd.h"
 #include "../../GeKo/Renderer/Buffer.h"
 #include "../../GeKo/Renderer/Shader.h"
 #include "../../GeKo/Renderer/Texture.h"
+#include "../../GeKo/Renderer/Camera.h"
 
 const float scr_width = 800.0f;
 const float scr_height = 600.0f;
@@ -21,10 +23,12 @@ private:
 	void update(float deltaTime);
 
 	gke::window w;
+	gke::InputManager inputmanager;
 	gke::VertexBuffer vbo;
 	gke::IndexBuffer ebo;
 	unsigned int VAO;
 	gke::Shader shader;
+	gke::Camera cam;
 
 	gkm::vec3 translation;
 	gkm::vec3 rotation;
@@ -33,4 +37,7 @@ private:
 
 	bool orthographic;
 
+
+	gkm::mat4 viewMat;
+	gkm::mat4 projectionMat;
 };

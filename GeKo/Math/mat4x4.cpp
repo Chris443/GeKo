@@ -205,7 +205,7 @@ namespace gkm {
 		ortho.m[3][3] = 1;
 		return ortho;
 	}
-
+	
 	mat4 lookAt(const gkm::vec3& pos, const gkm::vec3& look, const gkm::vec3& up) {
 		gkm::mat4 viewRot,viewTrans;
 
@@ -227,11 +227,10 @@ namespace gkm {
 		viewRot.m[2][0] = right.z;
 		viewRot.m[2][1] = up_vec.z;
 		viewRot.m[2][2] = forward.z;
-
+		
 		viewTrans.m[3][0] = -pos.x;
 		viewTrans.m[3][1] = -pos.y;
 		viewTrans.m[3][2] = -pos.z;
-
 
 		return viewRot * viewTrans;
 	}

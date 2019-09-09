@@ -21,12 +21,6 @@
     <ClCompile Include="..\vendor\GLAD\src\glad.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Applications\KatiApplication\K_App.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Applications\GebertApplication\G_App.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Math\mat4x4.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -78,14 +72,14 @@
     <ClCompile Include="GeKo\Renderer\Camera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\K_Application\K_App.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="GeKo\InputManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Applications\KatiApplication\K_App.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Applications\GebertApplication\G_App.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Math\mat4x4.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -149,14 +143,20 @@
     <ClInclude Include="GeKo\Renderer\Camera.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Applications\K_Application\K_App.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="GeKo\InputManager.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Applications\KatiApplication\Shader\basic.frag" />
-    <None Include="Applications\KatiApplication\Shader\basic.vert" />
-    <None Include="Applications\KatiApplication\Data.h" />
+    <None Include="Applications\K_Application\Shader\basic.frag" />
+    <None Include="Applications\K_Application\Shader\basic.vert" />
+    <None Include="Applications\K_Application\Data.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Applications\KatiApplication\res\Textures\wall.jpg">
+    <Image Include="Applications\K_Application\res\Textures\wall.jpg">
       <Filter>Ressourcendateien</Filter>
     </Image>
   </ItemGroup>

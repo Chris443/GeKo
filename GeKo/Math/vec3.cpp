@@ -129,6 +129,7 @@ namespace gkm {
 
 	void vec3::normalize() {
 		float l = length();
+		if (l == 0) return;
 		x /= l;
 		y /= l; 
 		z /= l;

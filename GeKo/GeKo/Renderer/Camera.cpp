@@ -1,24 +1,46 @@
 #include "Camera.h"
 
+namespace gke {
 
-Camera::Camera(gkm::vec3 position, gkm::vec3 viewDir,gkm::vec3 up)
-	:m_position(position), m_viewDirection(viewDir), m_upVector(up)
-{
+	Camera::Camera(gkm::vec3 position, gkm::vec3 lookAt, gkm::vec3 up)
+		:m_position(position), m_lookAt(lookAt), m_up(up)
+	{
+		init();
+	}
 
-}
+	Camera::~Camera()
+	{
+	}
 
-Camera::Camera()
-	: m_position(gkm::vec3()), m_viewDirection(gkm::vec3()), m_upVector(gkm::vec3(0.0f,1.0f,0.0f))
-{
-}
+	void Camera::init() {
+		m_forward = m_position - m_lookAt;
+		m_forward.normalize();
+		//m_up = gkm::vec3(0.0f,1.0f,0.0f);
+		m_right = gkm::cross(m_up,m_forward);
+	}
+	//careful: reference-up vector is 0,1,0
+	void Camera::updateCamera(){
+		m_forward = m_position - m_lookAt;
+		m_forward.normalize();
+		m_right = gkm::cross(gkm::vec3(0.0f,1.0f,0.0f), m_forward);
+		m_right.normalize();
+		m_up = gkm::cross(m_forward , m_right);
+	}
 
-Camera::~Camera()
-{
-}
+	gkm::mat4 Camera::getViewMatrix() const {
+		return gkm::lookAt(m_position, m_lookAt, m_up);
+	}
 
-
-
-gkm::mat4 Camera::getViewMatrix() const {
-	//return gkm::lookAt(position, m_position + m_viewDirection, m_upVector);
-	return gkm::mat4();
+	void Camera::processMovement(Movement movement, float deltaTime) {
+		float velocity = 5.0f * deltaTime;
+		if (movement == FORWARD)
+			m_position -= m_forward * velocity;
+		if (movement == BACKWARD)
+			m_position += m_forward * velocity;
+		if (movement == LEFT)
+			m_position += m_right * velocity;
+		if (movement == RIGHT)
+			m_position -= m_right * velocity;
+		updateCamera();
+	}
 }

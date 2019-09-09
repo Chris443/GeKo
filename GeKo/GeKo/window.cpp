@@ -2,7 +2,7 @@
 
 namespace gke {
 
-	window::window(int width, int height, const std::string& title)
+	window::window(float width, float height, const std::string& title)
 		:m_width(width), m_height(height), m_title(title)
 	{
 		init();
@@ -49,10 +49,5 @@ namespace gke {
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
 		glViewport(0, 0, width, height);
-	}
-
-	void processInput(GLFWwindow *window) {
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-			glfwSetWindowShouldClose(window, true);
 	}
 }

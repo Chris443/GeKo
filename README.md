@@ -10,7 +10,7 @@ Current TODOs:
 * Input - Handler
 * timebased window updating **Partially Done**
 * Texture Loader
-* Camera 
+* Camera **Done**
 * .obj Loader
 
 # Projects # 

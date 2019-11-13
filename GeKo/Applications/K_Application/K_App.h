@@ -17,6 +17,8 @@ class K_App {
 public:
 	K_App();
 	void run();
+	void processInput(GLFWwindow *window);
+	void mouseInput(GLFWwindow *window);
 private:
 	void init();
 	void render();
@@ -40,4 +42,8 @@ private:
 
 	gkm::mat4 viewMat;
 	gkm::mat4 projectionMat;
+
+	gkm::vec3 cameraPos = gkm::vec3(0.0f, 0.0f, 3.0f);
+	gkm::vec3 cameraFront = gkm::vec3(0.0f, 0.0f, -1.0f);
+	gkm::vec3 cameraUp = gkm::vec3(0.0f, 1.0f, 0.0f);
 };

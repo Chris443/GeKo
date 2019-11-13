@@ -5,8 +5,7 @@
 
 #include "GLFW/glfw3.h"
 namespace gke {
-	enum GKE_KEY{A = 65,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}; //GLFW_A = 65
-
+	enum GKE_KEY { SPACEBAR = 32, A = 65, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, TAB = 258 , L_SHIFT = 340}; //GLFW_A = 65
 	class InputManager
 	{
 	public:
@@ -17,7 +16,7 @@ namespace gke {
 		void processInput(GLFWwindow *window);
 	private:
 		//int keyToGlfw();
-		bool KEYS[25];
+		bool KEYS[28];
 		std::map<GKE_KEY, bool> keys;
 
 	};

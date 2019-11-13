@@ -7,7 +7,9 @@ namespace gke {
 		FORWARD,
 		BACKWARD,
 		RIGHT,
-		LEFT
+		LEFT,
+		UP,
+		DOWN
 	};
 
 
@@ -22,12 +24,13 @@ namespace gke {
 		void setUp(gkm::vec3 up) { m_up = up; };
 
 		void processMovement(Movement movement, float deltaTime);
+		void processMouse(double xpos, double ypos);
 
 		void updateCamera();
 
 		gkm::mat4 getViewMatrix() const;
-	private:
 		gkm::vec3 m_position;
+	private:
 		gkm::vec3 m_lookAt;
 
 		gkm::vec3 m_forward;
@@ -35,6 +38,9 @@ namespace gke {
 		gkm::vec3 m_right;
 
 		gkm::mat4 m_viewMatrix;
+
+		bool first = false;
+		float lastX, lastY;
 
 		void init();
 	};

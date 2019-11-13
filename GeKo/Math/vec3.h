@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <math.h>
+#include <assert.h>
 
 #include "vec4.h"
 

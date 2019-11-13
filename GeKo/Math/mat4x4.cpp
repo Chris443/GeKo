@@ -217,15 +217,15 @@ namespace gkm {
 	//	up_vec.normalize();
 
 		viewRot.m[0][0] = right.x;
-		viewRot.m[0][1] = up_vec.x;
-		viewRot.m[0][2] = forward.x;
-		
 		viewRot.m[1][0] = right.y;
-		viewRot.m[1][1] = up_vec.y;
-		viewRot.m[1][2] = forward.y;
-		
 		viewRot.m[2][0] = right.z;
+		
+		viewRot.m[0][1] = up_vec.x;
+		viewRot.m[1][1] = up_vec.y;
 		viewRot.m[2][1] = up_vec.z;
+		
+		viewRot.m[0][2] = forward.x;
+		viewRot.m[1][2] = forward.y;
 		viewRot.m[2][2] = forward.z;
 		
 		viewTrans.m[3][0] = -pos.x;

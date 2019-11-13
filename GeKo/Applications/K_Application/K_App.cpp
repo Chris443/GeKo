@@ -12,7 +12,7 @@
 
 K_App::K_App()
 	:w(scr_width, scr_height, "Example"), orthographic(false), FoV(90.0f),
-	cam(gkm::vec3(0.0f,0.0f,5.0f), gkm::vec3(0.0f,0.0f,0.0f))
+	cam(gkm::vec3(0.0f, 0.0f, 5.0f), gkm::vec3(0.0f, 0.0f, -1.0f))
 {
 	init();
 }
@@ -35,7 +35,7 @@ void K_App::run() {
 		//gke::processInput(&w);
 		glfwPollEvents();
 		inputmanager.processInput(w.get_Handle());
-		
+
 		deltaTime = static_cast<float>(glfwGetTime()) - oldTime;
 		oldTime = static_cast<float>(glfwGetTime());
 		//update logic()
@@ -52,7 +52,7 @@ void K_App::run() {
 	ImGui::DestroyContext();
 }
 
-void K_App::init(){
+void K_App::init() {
 	glEnable(GL_DEPTH_TEST);
 	scaling = gkm::vec3(0.5, 0.5, 0.5);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -63,11 +63,11 @@ void K_App::init(){
 	glBindVertexArray(VAO);
 
 	vbo.create(vertices, sizeof(vertices));
-	ebo.create(&indices[0], indices.size() * sizeof(float) );
+	ebo.create(&indices[0], indices.size() * sizeof(float));
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float) ));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
@@ -83,12 +83,12 @@ void K_App::render() {
 	{
 		ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-		ImGui::Begin("Gui!");                     
-		ImGui::SliderFloat3("Translation", &translation.x, -10.0f, 10.0f);   
+		ImGui::Begin("Gui!");
+		ImGui::SliderFloat3("Translation", &translation.x, -10.0f, 10.0f);
 		ImGui::SliderFloat3("Rotation", &rotation.x, 0.0f, 360.0f);
 		ImGui::SliderFloat3("Scaling", &scaling.x, -1.0f, 10.0f);
-		ImGui::SliderFloat("FoV", &FoV,0.0f, 360.0f);
-		ImGui::Checkbox("Orthographic" , &orthographic);
+		ImGui::SliderFloat("FoV", &FoV, 0.0f, 360.0f);
+		ImGui::Checkbox("Orthographic", &orthographic);
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
 	}
@@ -120,9 +120,12 @@ void K_App::render() {
 		modelMat *= modelMat.scale(scaling);
 
 		shader.setMat4("mat", modelMat);
+		processInput(w.get_Handle());
+		gkm::mat4 view2 = gkm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
 		shader.setMat4("view", cam.getViewMatrix());
 		shader.setMat4("proj", projectionMat);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 
 
@@ -150,13 +153,41 @@ void K_App::update(float deltaTime) {
 		cam.processMovement(gke::Movement::LEFT, deltaTime);
 	if (inputmanager.is_pressed(gke::GKE_KEY::D))
 		cam.processMovement(gke::Movement::RIGHT, deltaTime);
-		//	cam.setPosition();
+	if (inputmanager.is_pressed(gke::GKE_KEY::SPACEBAR))
+		cam.processMovement(gke::Movement::UP, deltaTime);
+	if (inputmanager.is_pressed(gke::GKE_KEY::L_SHIFT))
+		cam.processMovement(gke::Movement::DOWN, deltaTime);
 
 
-		//	cam.updateCamera();
+	//cam.updateCamera();
 
-	cam.updateCamera();
+}
 
+void K_App::processInput(GLFWwindow *window)
+{
+	float cameraSpeed = 0.0005f; // adjust accordingly
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * cameraFront;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		gkm::vec3 t = gkm::cross(cameraFront, cameraUp) ;
+		t.normalize();
+		cameraPos -= t * cameraSpeed;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		gkm::vec3 t = gkm::cross(cameraFront, cameraUp);
+		t.normalize();
+		cameraPos += t * cameraSpeed;
+	}
+}
+
+void K_App::mouseInput(GLFWwindow *window)
+{
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
 
 
 }

@@ -16,19 +16,21 @@ namespace gke {
 		m_forward = m_position - m_lookAt;
 		m_forward.normalize();
 		//m_up = gkm::vec3(0.0f,1.0f,0.0f);
-		m_right = gkm::cross(m_up,m_forward);
+		m_right = gkm::cross(m_up, m_forward);
+		m_right.normalize();
+		m_up = gkm::cross(m_forward, m_right);
 	}
 	//careful: reference-up vector is 0,1,0
-	void Camera::updateCamera(){
+	/*void Camera::updateCamera(){
 		m_forward = m_position - m_lookAt;
 		m_forward.normalize();
 		m_right = gkm::cross(gkm::vec3(0.0f,1.0f,0.0f), m_forward);
 		m_right.normalize();
 		m_up = gkm::cross(m_forward , m_right);
-	}
+	}*/
 
 	gkm::mat4 Camera::getViewMatrix() const {
-		return gkm::lookAt(m_position, m_lookAt, m_up);
+		return gkm::lookAt(m_position, m_position + m_lookAt, m_up);
 	}
 
 	void Camera::processMovement(Movement movement, float deltaTime) {
@@ -38,9 +40,22 @@ namespace gke {
 		if (movement == BACKWARD)
 			m_position += m_forward * velocity;
 		if (movement == LEFT)
-			m_position += m_right * velocity;
-		if (movement == RIGHT)
 			m_position -= m_right * velocity;
-		updateCamera();
+		if (movement == RIGHT)
+			m_position += m_right * velocity;
+		if (movement == UP)
+			m_position += m_up * velocity;
+		if (movement == DOWN)
+			m_position -= m_up * velocity;
+	}
+
+	void Camera::processMouse(double xpos, double ypos) {
+		if (first) {
+			lastX = xpos;
+			lastY = ypos;
+			first = false;
+		}
+
+
 	}
 }

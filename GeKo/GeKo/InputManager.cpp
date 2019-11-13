@@ -18,7 +18,9 @@ namespace gke {
 		for (int i = 65; i < 91; ++i) {
 			keys[(GKE_KEY)i] = glfwGetKey(window, i);
 		}
-
+		keys[(GKE_KEY)32] = glfwGetKey(window, 32);
+		keys[(GKE_KEY)258] = glfwGetKey(window, 258);
+		keys[(GKE_KEY)340] = glfwGetKey(window, 340);
 	}
 
 	bool InputManager::is_pressed(GKE_KEY key) {

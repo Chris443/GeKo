@@ -1,6 +1,8 @@
 # GeKo - A Renderer Project #
 
-Current TODOs:
+"Every Graphics/Engine Programmer should've programmed his own Engine."
+
+# Current TODOs #:
 
 * Several Math Operations
     * Gram-Schmidt(Orthonormal Basis)

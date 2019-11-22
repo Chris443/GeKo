@@ -1,18 +1,17 @@
 # GeKo - A Renderer Project #
 
-"Every Graphics/Engine Programmer should've programmed his own Engine."
+
 
 # Current TODOs #:
 
 * Several Math Operations
     * Gram-Schmidt(Orthonormal Basis)
-    * Completing Transformation Matrices (Column Major) - **Done** -> Expand (Quaternions)
+    * Completing Transformation Matrices (Column Major)  
     * Intersection Calculations e.g. Ray-Sphere
   
 * Input - Handler
-* timebased window updating **Partially Done**
 * Texture Loader
-* Camera **Done**
+* Camera  
 * .obj Loader
 
 # Projects # 

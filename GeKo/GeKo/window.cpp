@@ -50,4 +50,11 @@ namespace gke {
 	{
 		glViewport(0, 0, width, height);
 	}
+
+	void window::enable_mouse(bool enable) {
+		if(!enable)
+			glfwSetInputMode(m_windowHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //move to own method
+		else
+			glfwSetInputMode(m_windowHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //move to own method
+	}
 }

@@ -12,7 +12,8 @@
 
 K_App::K_App()
 	:w(scr_width, scr_height, "Example"), orthographic(false), FoV(90.0f),
-	cam(gkm::vec3(0.0f, 0.0f, 5.0f), gkm::vec3(0.0f, 0.0f, -1.0f))
+	cam(gkm::vec3(0.0f, 0.0f, 5.0f), gkm::vec3(0.0f, 0.0f, -1.0f)),
+	model("Applications/K_Application/res/barmodel/stall.obj")
 {
 	init();
 }
@@ -32,9 +33,9 @@ void K_App::run() {
 
 	while (w.isOpen()) {
 		//process input (TODO: via input handler)
-		//gke::processInput(&w);
 		glfwPollEvents();
 		inputmanager.processInput(w.get_Handle());
+		processInput(w.get_Handle(), deltaTime);
 
 		deltaTime = static_cast<float>(glfwGetTime()) - oldTime;
 		oldTime = static_cast<float>(glfwGetTime());
@@ -53,27 +54,51 @@ void K_App::run() {
 }
 
 void K_App::init() {
+
+
+
+
+	w.enable_mouse(true);
 	glEnable(GL_DEPTH_TEST);
-	scaling = gkm::vec3(0.5, 0.5, 0.5);
+	scaling = gkm::vec3(1, 1, 1);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	shader.create("./Applications/K_Application/Shader/basic.vert",
 		"./Applications/K_Application/Shader/basic.frag");
 
+	vbo.create(&model.m_vertices[0].x, model.m_vertices.size() * sizeof(gkm::vec3));
+	uvbuffer.create(&model.m_uv[0].u, model.m_uv.size() * sizeof(gkm::vec2));
+
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
-	vbo.create(vertices, sizeof(vertices));
-	ebo.create(&indices[0], indices.size() * sizeof(float));
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-	glBindVertexArray(0);
 
-	gke::Texture texture("./Applications/K_Application/res/Textures/wall.jpg");
+	glVertexAttribPointer(
+		0,                  // attribute
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(
+		1,                                // attribute
+		2,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+	);
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(VAO);
+
+
+	gke::Texture texture("./Applications/K_Application/res/barmodel/stallTexture.png");
+
 }
 
 void K_App::render() {
@@ -95,38 +120,29 @@ void K_App::render() {
 
 
 	ImGui::Render();
-
+	
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	shader.bind();
-	//texture.bind()
+	//texture.bind();
+
+
+	gkm::mat4 modelMat;
+	
+	//column order
+	modelMat *= modelMat.translate(gkm::vec3(0.0f, 0.0f, 0.0f) + translation);
+	modelMat *= modelMat.euler_rotate(rotation);
+	modelMat *= modelMat.scale(scaling);
+	
+	shader.setMat4("mat", modelMat);
+	shader.setMat4("view", cam.getViewMatrix());
+	shader.setMat4("proj", projectionMat);
+	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 
-	gkm::vec3 cubePositions[] = {
-		gkm::vec3(0.0f,0.0f,0.0f),
-		gkm::vec3(2.0f,0.0f,-15.0f),
-		gkm::vec3(-1.5f,0.0f,-2.0f)
-	};
+	glDrawArrays(GL_TRIANGLES, 0, model.m_vertices.size());
+	glBindVertexArray(0);
 
-
-	//update objects
-	for (int i = 0; i < 3; ++i) {
-
-		gkm::mat4 modelMat;
-
-		//column order
-		modelMat *= modelMat.translate(cubePositions[i] + translation);
-		modelMat *= modelMat.euler_rotate(rotation);
-		modelMat *= modelMat.scale(scaling);
-
-		shader.setMat4("mat", modelMat);
-		processInput(w.get_Handle());
-		gkm::mat4 view2 = gkm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-		shader.setMat4("view", cam.getViewMatrix());
-		shader.setMat4("proj", projectionMat);
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-	}
 
 
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -142,9 +158,12 @@ void K_App::update(float deltaTime) {
 		float aspectRatio = scr_width / scr_height;
 		projectionMat = gkm::ortographic(-aspectRatio, aspectRatio, -aspectRatio, aspectRatio, 0.1f, 100.0f);
 	}
-	/**********************************/
 
-	float velocity = 0.05f;
+
+}
+
+void K_App::processInput(GLFWwindow *window,float deltaTime)
+{
 	if (inputmanager.is_pressed(gke::GKE_KEY::W))
 		cam.processMovement(gke::Movement::FORWARD, deltaTime);
 	if (inputmanager.is_pressed(gke::GKE_KEY::S))
@@ -157,37 +176,32 @@ void K_App::update(float deltaTime) {
 		cam.processMovement(gke::Movement::UP, deltaTime);
 	if (inputmanager.is_pressed(gke::GKE_KEY::L_SHIFT))
 		cam.processMovement(gke::Movement::DOWN, deltaTime);
-
-
-	//cam.updateCamera();
-
-}
-
-void K_App::processInput(GLFWwindow *window)
-{
-	float cameraSpeed = 0.0005f; // adjust accordingly
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * cameraFront;
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * cameraFront;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		gkm::vec3 t = gkm::cross(cameraFront, cameraUp) ;
-		t.normalize();
-		cameraPos -= t * cameraSpeed;
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		gkm::vec3 t = gkm::cross(cameraFront, cameraUp);
-		t.normalize();
-		cameraPos += t * cameraSpeed;
-	}
+	//look for a better solution(key callback)
+	/*if (inputmanager.is_pressed(gke::GKE_KEY::LEFT_CONTROL)) {
+		w.enable_mouse(!mouse_active);
+		firstcam = !firstcam;
+		mouse_active = !mouse_active;
+	}*/
+	mouseInput(w.get_Handle());
 }
 
 void K_App::mouseInput(GLFWwindow *window)
 {
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
+	if (firstcam)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstcam = false;
+	}
 
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+
+	lastX = xpos;
+	lastY = ypos;
+
+	cam.processMouse(xoffset, yoffset);
 
 }

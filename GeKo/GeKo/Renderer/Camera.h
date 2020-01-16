@@ -12,6 +12,8 @@ namespace gke {
 		DOWN
 	};
 
+	const float YAW = -90.0f;
+	const float PITCH = 0.0f;
 
 	class Camera
 	{
@@ -24,18 +26,16 @@ namespace gke {
 		void setUp(gkm::vec3 up) { m_up = up; };
 
 		void processMovement(Movement movement, float deltaTime);
-		void processMouse(double xpos, double ypos);
+		void processMouse(float xpos, float ypos);
 
-		void updateCamera();
 
 		gkm::mat4 getViewMatrix() const;
-		gkm::vec3 m_position;
 	private:
+		gkm::vec3 m_position;
 		gkm::vec3 m_lookAt;
-
-		gkm::vec3 m_forward;
 		gkm::vec3 m_up;
-		gkm::vec3 m_right;
+
+		float yaw, pitch;
 
 		gkm::mat4 m_viewMatrix;
 

@@ -215,7 +215,7 @@ namespace gkm {
 		right.normalize();
 		gkm::vec3 up_vec(gkm::cross(forward, right));
 	//	up_vec.normalize();
-
+		
 		viewRot.m[0][0] = right.x;
 		viewRot.m[1][0] = right.y;
 		viewRot.m[2][0] = right.z;

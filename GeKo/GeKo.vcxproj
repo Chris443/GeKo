@@ -141,6 +141,8 @@
     <ClCompile Include="GeKo\Renderer\Shader.cpp" />
     <ClCompile Include="GeKo\Renderer\VertexArray.cpp" />
     <ClCompile Include="GeKo\Renderer\Texture.cpp" />
+    <ClCompile Include="GeKo\Renderer\Model.cpp" />
+    <ClCompile Include="Math\vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Applications\K_Application\K_App.h" />
@@ -166,6 +168,8 @@
     <ClInclude Include="GeKo\Renderer\Shader.h" />
     <ClInclude Include="GeKo\Renderer\VertexArray.h" />
     <ClInclude Include="GeKo\Renderer\Texture.h" />
+    <ClInclude Include="GeKo\Renderer\Model.h" />
+    <ClInclude Include="Math\vec2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Applications\K_Application\Data.h" />

@@ -129,12 +129,12 @@ namespace gkm {
 
 	void vec3::normalize() {
 		float l = length();
-		assert(l != 0);
-		l = 1 / l;
-		//if (l == 0) return;
-		x *= l;
-		y *= l; 
-		z *= l;
+		if (l != 0){
+			l = 1 / l;
+				x *= l;
+				y *= l;
+				z *= l;
+		}
 	}
 
 	float dot(const vec3& v1, const vec3& v2){

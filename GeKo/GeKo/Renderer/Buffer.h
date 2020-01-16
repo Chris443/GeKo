@@ -6,8 +6,10 @@
 * @brief Basic Buffer Wrapper for Opengl Indeex/Vertexbuffers
 */
 
-
 #include "glad/glad.h"
+
+
+#include "../../Math/vec3.h"
 
 namespace gke {
 

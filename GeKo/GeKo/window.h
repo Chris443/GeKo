@@ -28,6 +28,8 @@ namespace gke {
 		void create_Window();
 		void swapBuffers();
 		bool isOpen();
+		void enable_mouse(bool enable);
+
 
 		GLFWwindow* get_Handle() { return m_windowHandle; }
 	private:
